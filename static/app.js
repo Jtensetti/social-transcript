@@ -34,6 +34,8 @@ function updateControls() {
   $('model').disabled = state.busy || state.recording || !state.models.length;
   $('versions').disabled = state.busy || state.recording || !state.versions.length;
   $('copy').disabled = state.busy || state.active < 0;
+  $('audit-button').disabled = state.busy || state.recording || state.active < 0 ||
+    !$('transcript').value.trim() || !draftText().trim() || !state.models.includes($('model').value);
   $('reset').disabled = state.busy;
   $('transcript').readOnly = state.busy;
   $('context').readOnly = state.busy;
@@ -148,6 +150,8 @@ function renderEmpty() {
   $('draft-name').textContent = chosen ? `${chosen.name} · arbetsmall` : 'Arbetsmall';
   $('template-subtitle').textContent = chosen?.subtitle || '';
   $('template-notice').textContent = chosen?.notice || '';
+  setContextHint(chosen);
+  $('source-audit').hidden = true; $('audit-list').replaceChildren();
   $('review').hidden = true; $('review-list').replaceChildren();
   if (state.versions.length) {
     const placeholder = new Option('Tidigare versioner', '', true, true); placeholder.disabled = true;
@@ -179,6 +183,7 @@ function renderVersion(index) {
   const chosen = template();
   $('draft-name').textContent = `${chosen.name} · arbetsmall`;
   $('template-subtitle').textContent = chosen.subtitle; $('template-notice').textContent = chosen.notice;
+  setContextHint(chosen);
   $('draft-content').replaceChildren();
   for (const section of version.sections) {
     const group = document.createElement('div'); group.className = 'note-field';
@@ -188,18 +193,63 @@ function renderVersion(index) {
     field.rows = Math.min(10, Math.max(2, Math.ceil(section.text.length / 75)));
     field.value = section.text; field.placeholder = 'Ingen uppgift i underlaget.';
     field.spellcheck = false; field.autocomplete = 'off';
-    field.addEventListener('input', () => { $('draft-status').textContent = 'Manuellt redigerat · granska mot underlaget.'; });
+    field.addEventListener('input', () => {
+      $('draft-status').textContent = 'Manuellt redigerat · granska mot underlaget.';
+      renderAudit(); updateControls();
+    });
     group.append(label, field); $('draft-content').append(group);
   }
   $('review-list').replaceChildren();
   version.review.forEach(text => { const li = document.createElement('li'); li.textContent = text; $('review-list').append(li); });
   $('review').hidden = !version.review.length;
   $('versions').replaceChildren();
-  state.versions.forEach((v, i) => $('versions').add(new Option(`Version ${i + 1} · ${v.template_id.toUpperCase()}`, String(i))));
+  state.versions.forEach((v, i) => $('versions').add(new Option(`Version ${i + 1} · ${state.config.templates.find(t => t.id === v.template_id)?.name || v.template_id}`, String(i))));
   $('versions').value = String(index);
   $('draft-status').textContent = `Version ${index + 1} · ${version.model} · granska mot underlaget.`;
-  updateControls();
+  renderAudit(); updateControls();
 }
+function setContextHint(chosen) {
+  $('context').placeholder = chosen?.context_hint || 'Komplettera med sammanhang, rätta en uppgift eller be om en annan formulering.';
+}
+function auditSnapshot() {
+  return JSON.stringify({template_id: $('template').value, transcript: $('transcript').value,
+    context: $('context').value, current_draft: draftText()});
+}
+function renderAudit() {
+  const audit = state.active >= 0 ? state.versions[state.active]?.audit : null;
+  $('source-audit').hidden = !audit;
+  $('audit-list').replaceChildren();
+  if (!audit) return;
+  if (audit.snapshot !== auditSnapshot()) {
+    $('audit-status').textContent = 'Texten eller underlaget har ändrats. Kör kontrollen igen; föregående kontroll är inaktuell.';
+    return;
+  }
+  const findings = audit.result.findings;
+  $('audit-status').textContent = findings.length
+    ? `${findings.length} möjliga avvikelser · ${audit.result.model}. Kontrollera själv; AI-kontrollen kan ha fel.`
+    : `AI-kontrollen hittade inga avvikelser · ${audit.result.model}. Detta är inte ett godkännande eller en garanti för att allt finns med.`;
+  const kinds = {missing: 'Möjligt bortfall', changed: 'Möjligen ändrad innebörd', unsupported: 'Möjligen utan stöd'};
+  const sources = {transcript: 'Transkribering', context: 'Kontext', draft: 'Utkast'};
+  for (const finding of findings) {
+    const li = document.createElement('li');
+    const heading = document.createElement('strong'); heading.textContent = kinds[finding.kind];
+    const message = document.createElement('p'); message.textContent = finding.message;
+    const quote = document.createElement('blockquote'); quote.textContent = `${sources[finding.source]}: ”${finding.quote}”`;
+    li.append(heading, message, quote); $('audit-list').append(li);
+  }
+}
+$('audit-button').addEventListener('click', async () => {
+  if (state.active < 0) return;
+  setBusy(true, 'Jämför utkast och underlag lokalt. Texten ändras inte…');
+  try {
+    stashCurrent();
+    const snapshot = auditSnapshot();
+    const result = await api('/api/audit', {...JSON.parse(snapshot), model: $('model').value});
+    state.versions[state.active].audit = {snapshot, result};
+    renderAudit(); notify('AI-kontrollen är klar. Utkastet är oförändrat; granska eventuella avvikelser själv.');
+  } catch (error) { showError(error); }
+  finally { setBusy(false); }
+});
 async function generateDraft() {
   stashCurrent();
   const input = {template_id: $('template').value, model: $('model').value,
@@ -225,6 +275,7 @@ $('transcribe').addEventListener('click', async () => {
     $('transcribe').textContent = 'Transkriberar…';
     const result = await api('/api/transcribe', state.audio, true);
     $('transcript').value = result.text;
+    renderAudit(); // A new transcript invalidates old checks even when draft generation fails.
     if (state.models.includes($('model').value)) {
       notify('Transkriberingen är klar. Den lokala språkmodellen fyller arbetsmallen…');
       await generateDraft();
@@ -243,7 +294,8 @@ $('generate').addEventListener('click', async () => {
 });
 $('template').addEventListener('change', () => { stashCurrent(); renderEmpty(); });
 $('versions').addEventListener('change', () => { const next = Number($('versions').value); stashCurrent(); renderVersion(next); });
-$('transcript').addEventListener('input', updateControls);
+$('transcript').addEventListener('input', () => { renderAudit(); updateControls(); });
+$('context').addEventListener('input', renderAudit);
 $('model').addEventListener('change', updateControls);
 $('refresh-models').addEventListener('click', () => refreshModels().catch(showError));
 $('find-mics').addEventListener('click', () => listMicrophones(true).catch(() => notify('Tillåt mikrofonen i webbläsaren och försök igen.', true)));
@@ -276,7 +328,15 @@ navigator.mediaDevices?.addEventListener('devicechange', () => { if (!state.reco
   try {
     state.config = await api('/api/config');
     $('template').replaceChildren();
-    state.config.templates.forEach(item => $('template').add(new Option(item.name, item.id)));
+    const groups = new Map();
+    state.config.templates.forEach(item => {
+      const category = item.category || 'Övriga mallar';
+      if (!groups.has(category)) {
+        const group = document.createElement('optgroup'); group.label = category;
+        groups.set(category, group); $('template').append(group);
+      }
+      groups.get(category).append(new Option(item.name, item.id));
+    });
     renderEmpty();
     await Promise.all([refreshModels(), listMicrophones()]);
     updateControls();

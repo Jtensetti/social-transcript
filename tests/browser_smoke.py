@@ -14,7 +14,7 @@ from playwright.sync_api import expect, sync_playwright
 BASE = "http://127.0.0.1:8765"
 with urlopen(BASE + "/api/config") as response:
     templates = {t["id"]: t for t in json.load(response)["templates"]}
-state = {"fail": False, "requests": [], "audio": False, "attack": True}
+state = {"audit_fail": False, "audit_empty": False, "audit_requests": [], "fail": False, "requests": [], "audio": False, "attack": True}
 
 
 def status(route):
@@ -49,6 +49,18 @@ def draft(route):
                         "sections": sections, "review": review})
 
 
+def audit(route):
+    data = route.request.post_data_json
+    state["audit_requests"].append(data)
+    if state["audit_fail"]:
+        route.fulfill(status=502, json={"detail": "Test: källkontrollen misslyckades; utkastet är oförändrat."})
+        return
+    findings = [] if state["audit_empty"] else [{
+        "kind": "missing", "source": "transcript", "quote": data["transcript"],
+        "message": '<img src=x onerror="window.injected=true"> Kontrollera underlaget.'}]
+    route.fulfill(json={"model": data["model"], "findings": findings})
+
+
 with sync_playwright() as p:
     kwargs = {"headless": True, "args": ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream", "--no-sandbox"]}
     if os.environ.get("CHROMIUM_PATH"):
@@ -61,9 +73,10 @@ with sync_playwright() as p:
     page.route("**/api/status", status)
     page.route("**/api/transcribe", transcribe)
     page.route("**/api/draft", draft)
+    page.route("**/api/audit", audit)
     page.goto(BASE)
     expect(page.locator("#model")).to_have_value("gemma4:e4b")
-    expect(page.locator("#template option")).to_have_count(5)
+    expect(page.locator("#template option")).to_have_count(7)
     expect(page.locator("#lifecare")).to_be_disabled()
     screenshots = Path(os.environ["SCREENSHOT_DIR"]) if os.environ.get("SCREENSHOT_DIR") else None
     if screenshots:
@@ -90,12 +103,48 @@ with sync_playwright() as p:
     page.locator("#versions").select_option("0")
     expect(page.locator("#context")).to_have_value("Detta är ett hembesök.")
     expect(page.locator("#field-kontakt")).to_have_value("Manuellt redigerad formulering.")
-    for template_id in ("ibic", "asi", "freda", "esther"):
+    for template_id in ("ibic", "asi", "freda", "esther", "iup", "lon"):
         page.locator("#template").select_option(template_id)
         page.locator("#generate").click()
         expect(page.locator(".note-field")).to_have_count(len(templates[template_id]["sections"]))
         assert state["requests"][-1]["template_id"] == template_id
         assert state["requests"][-1]["current_draft"] == ""
+    expect(page.locator("#context")).to_have_attribute("placeholder", templates["lon"]["context_hint"])
+    before_audit = page.locator(".note-field textarea").first.input_value()
+    page.locator("#audit-button").click()
+    expect(page.locator("#audit-status")).to_contain_text("möjliga avvikelser")
+    assert page.locator(".note-field textarea").first.input_value() == before_audit
+    assert before_audit in state["audit_requests"][-1]["current_draft"]
+    assert not page.evaluate("Boolean(window.injected)")
+    assert page.locator("#audit-list img").count() == 0
+    assert page.locator("#audit-list blockquote").count() == 1
+    page.locator(".note-field textarea").first.fill("En manuell ändring.")
+    expect(page.locator("#audit-status")).to_contain_text("inaktuell")
+    expect(page.locator("#audit-list li")).to_have_count(0)
+    page.locator(".note-field textarea").first.fill(before_audit)
+    expect(page.locator("#audit-list li")).to_have_count(1)
+    old_context = page.locator("#context").input_value()
+    page.locator("#context").fill("Ändrad kontext")
+    expect(page.locator("#audit-status")).to_contain_text("inaktuell")
+    page.locator("#context").fill(old_context)
+    old_transcript = page.locator("#transcript").input_value()
+    page.locator("#transcript").fill(old_transcript + " Ändring.")
+    expect(page.locator("#audit-status")).to_contain_text("inaktuell")
+    page.locator("#transcript").fill(old_transcript)
+    current_version = page.locator("#versions").input_value()
+    page.locator("#versions").select_option("0")
+    expect(page.locator("#source-audit")).to_be_hidden()
+    page.locator("#versions").select_option(current_version)
+    expect(page.locator("#source-audit")).to_be_visible()
+    state["audit_fail"] = True
+    page.locator("#audit-button").click()
+    expect(page.locator("#notification")).to_contain_text("källkontrollen misslyckades")
+    expect(page.locator("#audit-list li")).to_have_count(1)
+    assert page.locator(".note-field textarea").first.input_value() == before_audit
+    state["audit_fail"] = False; state["audit_empty"] = True
+    page.locator("#audit-button").click()
+    expect(page.locator("#audit-status")).to_contain_text("inte ett godkännande")
+    expect(page.locator("#audit-list li")).to_have_count(0)
     before = page.locator(".note-field textarea").first.input_value()
     state["fail"] = True
     page.locator("#generate").click()
@@ -118,6 +167,8 @@ with sync_playwright() as p:
     expect(page.locator("#context")).to_have_value("")
     expect(page.locator("#copy")).to_be_disabled()
     expect(page.locator("#playback")).to_be_hidden()
+    expect(page.locator("#source-audit")).to_be_hidden()
+    expect(page.locator("#audit-button")).to_be_disabled()
     assert not errors, errors
     browser.close()
-print("Browser smoke passed: microphone -> WAV -> transcript -> five templates -> revision/history -> error recovery -> clipboard -> mobile -> reset.")
+print("Browser smoke passed: microphone -> WAV -> transcript -> seven templates -> revision/history -> source audit/staleness/XSS -> error recovery -> clipboard -> mobile -> reset.")

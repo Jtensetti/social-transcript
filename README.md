@@ -2,7 +2,7 @@
 
 Lokal prototyp: **mikrofon → Pianissimo → arbetsmall via Ollama → granskning och ny version**.
 
-BBIC, IBIC, ASI, FREDA och ESTHER finns som val. Knappen **Överför till Lifecare** är avstängd och har ingen funktion, ingen anslutning och inget API bakom sig.
+BBIC, IBIC, ASI, FREDA, ESTHER, **IUP-samtal** och **Lönegrundande samtal** finns som val, grupperade efter verksamhetsområde. Knappen **Överför till Lifecare** är avstängd och har ingen funktion, ingen anslutning och inget API bakom sig.
 
 > Använd påhittade uppgifter under test. Detta är ett dokumentationsstöd för utkast, inte ett godkänt verksamhetssystem, bedömningsinstrument eller beslutsstöd.
 
@@ -57,6 +57,27 @@ Sakuppgifter som behöver rättas bör rättas i transkriberingen eller komplett
 
 **Kopiera text** kopierar på uttrycklig begäran ett utkast till systemets urklipp. Det är inte en Lifecare-integration. **Nytt samtal** rensar appens ljud, text, kontext och versioner efter bekräftelse. Versionshistoriken finns endast i den öppna sidan; ingen databas eller automatisk filhistorik används.
 
+## Uppdatera en befintlig installation
+
+Stoppa servern med Ctrl+C utan att stänga sidan innan osparat arbete har kopierats ut. Kör sedan:
+
+```powershell
+git pull --ff-only
+.\start.cmd
+```
+
+Ladda om sidan. Den här uppdateringen lägger inte till några nya Python-beroenden och kräver ingen ny modellhämtning. Osparad text och versionshistorik försvinner vid omladdning.
+
+## Kontrollera mot underlaget
+
+Efter ett utkast kan du klicka **Kontrollera mot underlaget**. Ett separat, manuellt initierat anrop till vald lokal Ollama-modell jämför transkribering, kontext och den aktuella redigerade texten. Den söker möjliga bortfall, ändrad innebörd och påståenden utan stöd. Den ändrar inte utkastet och skapar inga betyg, löneförslag eller beslut.
+
+Varje fynd visas med ett citat från transkriberingen, kontexten eller utkastet. Servern kontrollerar att citatet faktiskt finns i den angivna texten (endast blanksteg normaliseras). Påhittade citat eller ogiltigt svarsformat avvisar hela kontrollsvaret; de filtreras inte tyst bort. Resultatet sparas bara i sidans versionshistorik. Ändras text, transkribering eller kontext markeras kontrollen som **inaktuell**. Fel vid en ny kontroll raderar inte ett tidigare resultat eller ditt utkast.
+
+**AI-kontrollen är rådgivande, inte en kvalitetsgaranti.** Den kan missa bortfall och flagga korrekta formuleringar. Ett matchande citat verifierar inte modellens tolkning. Den jämför text, inte ljudet, och kan därför inte upptäcka uppgifter som Pianissimo redan har tappat. Den är inte en oberoende kontroll när samma modell skriver och granskar. Att inga avvikelser hittas betyder aldrig att anteckningen är godkänd.
+
+Testfall för IBIC, IUP och lön finns i **[BENCHMARK.md](BENCHMARK.md)**. De innehåller fiktiva samtal, riktade rättelser och manuella kontrollpunkter. Inga resultat från verkliga modeller är förifyllda.
+
 ## Om arbetsmallarna
 
 Mallarnas fältnamn och skrivinstruktioner ligger i `templates.json`. De är **förenklade, egna arbetsmallar** inspirerade av nedanstående arbetssätt – inte fullständiga eller godkända originalformulär. De behöver ersättas eller anpassas till verksamhetens faktiska dokumentationsmallar före ett riktigt införande.
@@ -67,7 +88,22 @@ Mallarnas fältnamn och skrivinstruktioner ligger i `templates.json`. De är **f
 - **FREDA:** anteckningsstöd om personens berättelse, beskrivet våld, trygghet, barn, stöd och överenskommen uppföljning. Inga riskpoäng, risknivåer eller egna säkerhetsplaner. Ersätter inte något av FREDA-instrumenten.
 - **ESTHER:** personcentrerad anteckning om vad som är viktigt för personen, resurser, önskemål och samordning. ESTHER är här tolkningen av beställningen; detta avser **inte ESTER-bedömning** för barn och unga.
 
-Modellen instrueras att lämna fält tomma när uppgifter saknas, skilja utsagor från observationer och flagga oklarheter. **Det är instruktioner, inte en garanti mot hallucinationer eller utelämnanden.** JSON-valideringen kontrollerar format och fält, inte om innehållet är sant.
+- **IUP-samtal:** elevens egen bild, lärarens ämnesvisa omdömen, lärmiljö, vårdnadshavarens perspektiv, mål, skolans insatser och uppföljning. Inga nya omdömen, betyg, diagnoser eller åtgärdsprogram genereras.
+- **Lönegrundande samtal:** uppdrag och faktiska lokala kriterier, medarbetarens resultat, chefens bedömning, förutsättningar, utveckling, skilda uppfattningar, löneuppgifter och uppföljning. Inga egna prestationspoäng, löneförslag eller lönebeslut.
+
+### Varför IUP-mallen ser ut så
+
+Skolverket beskriver IUP som både tillbakablickande och framåtsyftande, med omdömen om kunskapsutveckling och planering av insatser. Därför skiljer arbetsmallen ämnesunderlaget från nästa steg och gör skolans insatser synliga. Elevens och vårdnadshavarens perspektiv hålls isär från lärarens omdömen. Kunskaper blandas inte ihop med personlighet eller trivsel. Åtaganden för eleven eller hemmet får inte hittas på eller ersätta det stöd skolan uttryckligen åtagit sig.
+
+Detta är ett samtalsutkast, inte ett påstående om att alla ämnen, stödbehov eller formella IUP-krav är täckta. Anpassa till skolform, årskurs, rektorns beslutade utformning och lärarnas faktiska bedömningsunderlag. Källa: Skolverket, länkat nedan.
+
+### Varför lönemallen ser ut så
+
+SKR beskriver lönebildning som lokal och dialogen mellan chef och medarbetare som betydelsefull. Därför använder mallen enbart kriterier som faktiskt anges, inte en påhittad universell matris. Den dokumenterar chefens bedömning och medarbetarens uppgifter utan att själv ta ställning till prestationen.
+
+Löneönskemål, arbetsgivarens förslag och fattade beslut har olika status. De hålls isär från nuvarande lön, och belopp utan angiven period eller enhet kompletteras inte genom gissning. Kvarstående oenighet får inte skrivas om till samsyn. Anpassa till arbetsgivarens lönekriterier, kollektivavtal och samtalsprocess. Källa: SKR, länkat nedan.
+
+Modellen instrueras att lämna fält tomma när uppgifter saknas, skilja utsagor från observationer och flagga oklarheter. Gemensamma regler i `quality.py` kräver att olika personers relevanta uppgifter, observationsbegränsningar, rättelser och tidsavgränsade beslut bevaras även i själva anteckningen. Mallarnas egna `rules` skickas också till modellen. Kontextfältets vägledning anpassas efter vald mall. **Det är instruktioner, inte en garanti mot hallucinationer eller utelämnanden.** JSON-valideringen kontrollerar format och fält, inte om innehållet är sant.
 
 ## Lokal behandling och avgränsningar
 
@@ -118,6 +154,16 @@ python tests/browser_smoke.py
 
 Det testet använder webbläsarens syntetiska mikrofon och simulerade modellsvar. Det kräver att webbläsarens policy tillåter localhost, testmikrofon och urklipp. Det verifierar inte Pianissimos eller Gemmas transkriptions-/skrivkvalitet. Testa alltid den verkliga kedjan med påhittade svenska samtal på måldatorn: saknade uppgifter, motsägande uppgifter, datum, negationer, namn, dialekt och längre inspelningar.
 
+### UI-test utan nätverk eller mikrofon
+
+```bash
+python tests/browser_ui.py
+```
+
+Detta kompletterande test laddar appens faktiska HTML/CSS/JavaScript i en tom webbläsarsida och ersätter nätverksanrop med fiktiva svar. Det testar sju mallar, revisioner, versionshistorik, källkontroll, inaktuella kontroller, felåterhämtning, HTML-injektion i modellsvar och responsiv layout. Ingen server, mikrofon, urklippsåtkomst eller verklig modell används. `CHROMIUM_PATH` kan även här ange en installerad Chromium.
+
+Vid denna uppdatering passerade **87 Python-tester**, **5 ljudkodningstester** och det nätverksfria UI-testet. Det fullständiga mikrofontestet kunde inte köras i utvecklingsmiljön eftersom dess webbläsarpolicy blockerar localhost och ljudåtkomst. Verklig Pianissimo/Ollama-kvalitet och svarstid är inte uppmätta här; kör benchmarkfallen på måldatorn.
+
 ## Källor och erkännanden
 
 Pianissimo är utvecklad av **Klang AI AB** och publicerad under **CC BY 4.0**. Appen använder Klangs publicerade int8 ONNX-export; vi har inte modifierat eller tränat om modellvikterna. Modellvikter distribueras inte med repot.
@@ -134,5 +180,7 @@ Pianissimo är utvecklad av **Klang AI AB** och publicerad under **CC BY 4.0**. 
 - ASI: https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/asi-addiction-severity-index/
 - FREDA: https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/freda/
 - ESTHER: https://www.rjl.se/qulturum/natverka/esther/
+- IUP och utvecklingssamtal, Skolverket: https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/utvecklingssamtal-och-skriftlig-individuell-utvecklingsplan-iup
+- Lönebildning i kommuner och regioner, SKR: https://skr.se/fortroendevald/lonepolitik.7759.html
 
 Namn och referenser innebär inte att lösningen är granskad eller godkänd av metodernas upphovspersoner eller myndigheter.

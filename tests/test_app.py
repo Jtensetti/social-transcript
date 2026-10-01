@@ -64,7 +64,7 @@ def test_config_and_no_external_assets(client):
     assert "frame-ancestors 'none'" in response.headers["content-security-policy"]
     assert response.headers["cache-control"] == "no-store"
     cfg = client.get("/api/config").json()
-    assert [t["name"] for t in cfg["templates"]] == ["BBIC", "IBIC", "ASI", "FREDA", "ESTHER"]
+    assert [t["name"] for t in cfg["templates"]] == ["BBIC", "IBIC", "ASI", "FREDA", "ESTHER", "IUP-samtal", "Lönegrundande samtal"]
     assert cfg["default_model"] == "gemma4:e4b"
     assert cfg["max_seconds"] == 900
     assert cfg["token"]
@@ -139,7 +139,7 @@ def test_missing_weights_error_is_actionable(client, headers, monkeypatch, tmp_p
     assert "--download-model" in response.json()["detail"]
 
 
-@pytest.mark.parametrize("template_id", ["bbic", "ibic", "asi", "freda", "esther"])
+@pytest.mark.parametrize("template_id", ["bbic", "ibic", "asi", "freda", "esther", "iup", "lon"])
 def test_each_template_generates(client, headers, monkeypatch, template_id):
     mock = fake_ollama(generated(template_id))
     monkeypatch.setattr(backend, "ollama_request", mock)
@@ -162,7 +162,7 @@ def test_revision_keeps_original_context_and_current_draft(client, headers, monk
     assert response.status_code == 200
     sent = json.loads(mock.call_args_list[-1].args[2]["messages"][1]["content"])
     assert sent["transkribering"] == payload()["transcript"]
-    assert sent["handläggarens_kontext"] == "Det var ett hembesök."
+    assert sent["kompletteringar_och_justeringar"] == "Det var ett hembesök."
     assert sent["nuvarande_utkast"] == "Personen uppger att ..."
 
 

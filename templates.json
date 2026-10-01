@@ -1,46 +1,353 @@
 [
-  {"id":"bbic","name":"BBIC","subtitle":"Barnets situation och behov","notice":"Förenklad arbetsmall. Inte ett officiellt BBIC-formulär eller en fullständig BBIC-utredning.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/barn-och-unga/barn-och-unga-i-socialtjansten/barns-behov-i-centrum/","sections":[
-    {"id":"kontakt","title":"Kontakt och sammanhang","guidance":"Kontaktorsak, deltagare och datum bara om de anges."},
-    {"id":"barnet","title":"Barnets egen berättelse","guidance":"Barnets uttryckliga uppfattning; skilj från vuxnas tolkningar."},
-    {"id":"utveckling","title":"Barnets utveckling","guidance":"Angivna uppgifter om hälsa, utbildning, känslor, beteende och relationer. Ingen egen analys."},
-    {"id":"foraldrar","title":"Föräldrarnas förmåga","guidance":"Uppgivna omsorgsförhållanden, stöd och trygghet. Ange uppgiftslämnare."},
-    {"id":"miljo","title":"Familj och miljö","guidance":"Uppgifter om familj, boende, nätverk och levnadsförhållanden."},
-    {"id":"fortsatt","title":"Överenskommelser och fortsatt arbete","guidance":"Bara uttryckligen nämnda åtgärder, ansvar och uppföljning; inga automatiska beslut."}
-  ]},
-  {"id":"ibic","name":"IBIC","subtitle":"Resurser, behov och mål i vardagen","notice":"Förenklad arbetsmall. Inte en fullständig IBIC-dokumentation; ingen automatisk ICF-kodning eller behovsbedömning.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/individens-behov-i-centrum-ibic/","sections":[
-    {"id":"kontakt","title":"Kontakt och sammanhang","guidance":"Kontaktorsak och deltagare när det framgår."},
-    {"id":"perspektiv","title":"Individens perspektiv","guidance":"Det personen själv uppger är viktigt och vill ha stöd med."},
-    {"id":"nulage","title":"Nuläge och berörda livsområden","guidance":"Uppgifter om funktion och vardag. Nämn bara livsområden som berörs, utan koder eller skattningar."},
-    {"id":"resurser","title":"Resurser och omgivning","guidance":"Angivna förmågor, hjälpmedel, nätverk och omgivningsfaktorer."},
-    {"id":"mal","title":"Uttryckta behov och mål","guidance":"Personens eller handläggarens uttryckligen angivna behov och mål med tydlig källa."},
-    {"id":"insatser","title":"Insatser och uppföljning","guidance":"Skilj beslutade, genomförda och föreslagna insatser. Ange bara uttryckligt ansvar och tid."}
-  ]},
-  {"id":"asi","name":"ASI","subtitle":"Samtalsanteckning utifrån livsområden","notice":"Arbetsmall inspirerad av ASI:s livsområden. Ersätter inte ASI-intervju eller originalformulär. Inga automatiska skattningar eller kompositpoäng.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/asi-addiction-severity-index/","sections":[
-    {"id":"bakgrund","title":"Bakgrund och kontakt","guidance":"Uttrycklig bakgrund och syfte med kontakten."},
-    {"id":"fysisk","title":"Fysisk hälsa","guidance":"Uppgifter om fysisk hälsa. Skilj senaste 30 dagarna från tidigare liv, om angivet."},
-    {"id":"arbete","title":"Arbete och försörjning","guidance":"Angivna uppgifter om sysselsättning, utbildning och försörjning."},
-    {"id":"alkohol","title":"Alkoholanvändning","guidance":"Återge mängder, frekvens och tidsperiod exakt som uppgivna; beräkna inga poäng."},
-    {"id":"narkotika","title":"Narkotikaanvändning","guidance":"Återge uppgivna preparat och tidsperioder utan antaganden."},
-    {"id":"rattsligt","title":"Rättsliga problem","guidance":"Endast uttryckliga uppgifter, med källa och tid om kända."},
-    {"id":"familj","title":"Familj och umgänge","guidance":"Uppgivna relationer och social situation."},
-    {"id":"psykisk","title":"Psykisk hälsa","guidance":"Uppgivna erfarenheter och symtom utan egna diagnoser eller riskslutsatser."},
-    {"id":"fortsatt","title":"Uttryckta hjälpbehov och fortsatt kontakt","guidance":"Endast nämnda önskemål, överenskommelser och uppföljning; inga egna behandlingsförslag."}
-  ]},
-  {"id":"freda","name":"FREDA","subtitle":"Dokumentation om våld, skydd och stöd","notice":"Arbetsmall för samtalsanteckningar. Ersätter inte FREDA-kortfrågor, FREDA-beskrivning eller FREDA-farlighetsbedömning. Ingen automatisk risknivå eller poängsättning.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/freda/","sections":[
-    {"id":"kontakt","title":"Kontakt och sammanhang","guidance":"Kontaktorsak och vilka som deltog om angivet."},
-    {"id":"berattelse","title":"Personens berättelse","guidance":"Återge personens uppgifter om utsatthet med tydlig attribution, inte som fastslagna fakta."},
-    {"id":"vald","title":"Beskrivet våld och tidsförlopp","guidance":"Bara uppgivna handlingar, omfattning och tid. Tystnad är inte frånvaro av våld."},
-    {"id":"trygghet","title":"Uppgifter om aktuell trygghet","guidance":"Återge uttalad oro, hot och skyddsförhållanden. Beräkna aldrig farlighet eller risknivå."},
-    {"id":"barn","title":"Uppgifter om barn","guidance":"Endast uttryckligt nämnda uppgifter om barn och deras situation."},
-    {"id":"stod","title":"Önskat stöd och vidtagna åtgärder","guidance":"Skilj önskat stöd, planerade insatser och faktiskt genomförda åtgärder."},
-    {"id":"uppfoljning","title":"Överenskommen uppföljning","guidance":"Bara uttryckliga överenskommelser om ansvar och kontakt; ingen egen säkerhetsplan."}
-  ]},
-  {"id":"esther","name":"ESTHER","subtitle":"Det som är viktigt för personen","notice":"Egen arbetsmall inspirerad av ESTHER:s personcentrerade arbetssätt. Avser inte ESTER-bedömning för barn och unga.","source":"https://www.rjl.se/qulturum/natverka/esther/","sections":[
-    {"id":"viktigt","title":"Det som är viktigt för personen","guidance":"Utgå från personens egna mål, önskemål och prioriteringar."},
-    {"id":"nulage","title":"Situation och vardag","guidance":"Hur personen beskriver sin situation, utan att tillskriva personen andras tolkningar."},
-    {"id":"fungerar","title":"Det som fungerar och egna resurser","guidance":"Angivna styrkor, fungerande stöd och resurser."},
-    {"id":"behov","title":"Önskat stöd och förändring","guidance":"Uttryckliga behov och önskemål. Inga egna rekommendationer."},
-    {"id":"samordning","title":"Samordning och ansvar","guidance":"Aktörer och ansvar som faktiskt nämns. Skilj förslag från överenskommelse."},
-    {"id":"nasta","title":"Nästa steg och uppföljning","guidance":"Bara det som uttryckligen har planerats eller överenskommits."}
-  ]}
+  {
+    "id": "bbic",
+    "name": "BBIC",
+    "subtitle": "Barnets situation och behov",
+    "notice": "Förenklad arbetsmall. Inte ett officiellt BBIC-formulär eller en fullständig BBIC-utredning.",
+    "source": "https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/barn-och-unga/barn-och-unga-i-socialtjansten/barns-behov-i-centrum/",
+    "sections": [
+      {
+        "id": "kontakt",
+        "title": "Kontakt och sammanhang",
+        "guidance": "Kontaktorsak, deltagare och datum bara om de anges."
+      },
+      {
+        "id": "barnet",
+        "title": "Barnets egen berättelse",
+        "guidance": "Barnets uttryckliga uppfattning; skilj från vuxnas tolkningar."
+      },
+      {
+        "id": "utveckling",
+        "title": "Barnets utveckling",
+        "guidance": "Angivna uppgifter om hälsa, utbildning, känslor, beteende och relationer. Ingen egen analys."
+      },
+      {
+        "id": "foraldrar",
+        "title": "Föräldrarnas förmåga",
+        "guidance": "Uppgivna omsorgsförhållanden, stöd och trygghet. Ange uppgiftslämnare."
+      },
+      {
+        "id": "miljo",
+        "title": "Familj och miljö",
+        "guidance": "Uppgifter om familj, boende, nätverk och levnadsförhållanden."
+      },
+      {
+        "id": "fortsatt",
+        "title": "Överenskommelser och fortsatt arbete",
+        "guidance": "Bara uttryckligen nämnda åtgärder, ansvar och uppföljning; inga automatiska beslut."
+      }
+    ],
+    "category": "Socialtjänst och omsorg"
+  },
+  {
+    "id": "ibic",
+    "name": "IBIC",
+    "subtitle": "Resurser, behov och mål i vardagen",
+    "notice": "Förenklad arbetsmall. Inte en fullständig IBIC-dokumentation; ingen automatisk ICF-kodning eller behovsbedömning.",
+    "source": "https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/individens-behov-i-centrum-ibic/",
+    "sections": [
+      {
+        "id": "kontakt",
+        "title": "Kontakt och sammanhang",
+        "guidance": "Kontaktorsak och deltagare när det framgår."
+      },
+      {
+        "id": "perspektiv",
+        "title": "Individens perspektiv",
+        "guidance": "Det personen själv uppger är viktigt och vill ha stöd med."
+      },
+      {
+        "id": "nulage",
+        "title": "Nuläge och berörda livsområden",
+        "guidance": "Uppgifter om funktion och vardag. Nämn bara livsområden som berörs, utan koder eller skattningar. Bevara olika personers uppgifter och vad personalen uttryckligen inte observerade."
+      },
+      {
+        "id": "resurser",
+        "title": "Resurser och omgivning",
+        "guidance": "Angivna förmågor, hjälpmedel, nätverk och omgivningsfaktorer."
+      },
+      {
+        "id": "mal",
+        "title": "Uttryckta behov och mål",
+        "guidance": "Personens eller handläggarens uttryckligen angivna behov och mål med tydlig källa."
+      },
+      {
+        "id": "insatser",
+        "title": "Insatser och uppföljning",
+        "guidance": "Skilj beslutade, genomförda och föreslagna insatser. Ange bara uttryckligt ansvar och tid. Bevara önskade deltagare och mötesspecifika begränsningar av beslut."
+      }
+    ],
+    "category": "Socialtjänst och omsorg",
+    "rules": [
+      "Bevara personens och anhörigas olika uppgifter om samma livsområde i själva anteckningen, med uppgiftslämnare och uttalad osäkerhet. Flytta inte bort dem till enbart review.",
+      "Bevara uttryckliga avgränsningar av observationer, vem som tog initiativ till kontakten och önskemål om deltagare vid uppföljning.",
+      "Inget beslut vid besöket betyder inte att personen saknar tidigare insatser. Behåll tidsavgränsningen."
+    ]
+  },
+  {
+    "id": "asi",
+    "name": "ASI",
+    "subtitle": "Samtalsanteckning utifrån livsområden",
+    "notice": "Arbetsmall inspirerad av ASI:s livsområden. Ersätter inte ASI-intervju eller originalformulär. Inga automatiska skattningar eller kompositpoäng.",
+    "source": "https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/asi-addiction-severity-index/",
+    "sections": [
+      {
+        "id": "bakgrund",
+        "title": "Bakgrund och kontakt",
+        "guidance": "Uttrycklig bakgrund och syfte med kontakten."
+      },
+      {
+        "id": "fysisk",
+        "title": "Fysisk hälsa",
+        "guidance": "Uppgifter om fysisk hälsa. Skilj senaste 30 dagarna från tidigare liv, om angivet."
+      },
+      {
+        "id": "arbete",
+        "title": "Arbete och försörjning",
+        "guidance": "Angivna uppgifter om sysselsättning, utbildning och försörjning."
+      },
+      {
+        "id": "alkohol",
+        "title": "Alkoholanvändning",
+        "guidance": "Återge mängder, frekvens och tidsperiod exakt som uppgivna; beräkna inga poäng."
+      },
+      {
+        "id": "narkotika",
+        "title": "Narkotikaanvändning",
+        "guidance": "Återge uppgivna preparat och tidsperioder utan antaganden."
+      },
+      {
+        "id": "rattsligt",
+        "title": "Rättsliga problem",
+        "guidance": "Endast uttryckliga uppgifter, med källa och tid om kända."
+      },
+      {
+        "id": "familj",
+        "title": "Familj och umgänge",
+        "guidance": "Uppgivna relationer och social situation."
+      },
+      {
+        "id": "psykisk",
+        "title": "Psykisk hälsa",
+        "guidance": "Uppgivna erfarenheter och symtom utan egna diagnoser eller riskslutsatser."
+      },
+      {
+        "id": "fortsatt",
+        "title": "Uttryckta hjälpbehov och fortsatt kontakt",
+        "guidance": "Endast nämnda önskemål, överenskommelser och uppföljning; inga egna behandlingsförslag."
+      }
+    ],
+    "category": "Socialtjänst och omsorg"
+  },
+  {
+    "id": "freda",
+    "name": "FREDA",
+    "subtitle": "Dokumentation om våld, skydd och stöd",
+    "notice": "Arbetsmall för samtalsanteckningar. Ersätter inte FREDA-kortfrågor, FREDA-beskrivning eller FREDA-farlighetsbedömning. Ingen automatisk risknivå eller poängsättning.",
+    "source": "https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/freda/",
+    "sections": [
+      {
+        "id": "kontakt",
+        "title": "Kontakt och sammanhang",
+        "guidance": "Kontaktorsak och vilka som deltog om angivet."
+      },
+      {
+        "id": "berattelse",
+        "title": "Personens berättelse",
+        "guidance": "Återge personens uppgifter om utsatthet med tydlig attribution, inte som fastslagna fakta."
+      },
+      {
+        "id": "vald",
+        "title": "Beskrivet våld och tidsförlopp",
+        "guidance": "Bara uppgivna handlingar, omfattning och tid. Tystnad är inte frånvaro av våld."
+      },
+      {
+        "id": "trygghet",
+        "title": "Uppgifter om aktuell trygghet",
+        "guidance": "Återge uttalad oro, hot och skyddsförhållanden. Beräkna aldrig farlighet eller risknivå."
+      },
+      {
+        "id": "barn",
+        "title": "Uppgifter om barn",
+        "guidance": "Endast uttryckligt nämnda uppgifter om barn och deras situation."
+      },
+      {
+        "id": "stod",
+        "title": "Önskat stöd och vidtagna åtgärder",
+        "guidance": "Skilj önskat stöd, planerade insatser och faktiskt genomförda åtgärder."
+      },
+      {
+        "id": "uppfoljning",
+        "title": "Överenskommen uppföljning",
+        "guidance": "Bara uttryckliga överenskommelser om ansvar och kontakt; ingen egen säkerhetsplan."
+      }
+    ],
+    "category": "Socialtjänst och omsorg"
+  },
+  {
+    "id": "esther",
+    "name": "ESTHER",
+    "subtitle": "Det som är viktigt för personen",
+    "notice": "Egen arbetsmall inspirerad av ESTHER:s personcentrerade arbetssätt. Avser inte ESTER-bedömning för barn och unga.",
+    "source": "https://www.rjl.se/qulturum/natverka/esther/",
+    "sections": [
+      {
+        "id": "viktigt",
+        "title": "Det som är viktigt för personen",
+        "guidance": "Utgå från personens egna mål, önskemål och prioriteringar."
+      },
+      {
+        "id": "nulage",
+        "title": "Situation och vardag",
+        "guidance": "Hur personen beskriver sin situation, utan att tillskriva personen andras tolkningar."
+      },
+      {
+        "id": "fungerar",
+        "title": "Det som fungerar och egna resurser",
+        "guidance": "Angivna styrkor, fungerande stöd och resurser."
+      },
+      {
+        "id": "behov",
+        "title": "Önskat stöd och förändring",
+        "guidance": "Uttryckliga behov och önskemål. Inga egna rekommendationer."
+      },
+      {
+        "id": "samordning",
+        "title": "Samordning och ansvar",
+        "guidance": "Aktörer och ansvar som faktiskt nämns. Skilj förslag från överenskommelse."
+      },
+      {
+        "id": "nasta",
+        "title": "Nästa steg och uppföljning",
+        "guidance": "Bara det som uttryckligen har planerats eller överenskommits."
+      }
+    ],
+    "category": "Socialtjänst och omsorg"
+  },
+  {
+    "id": "iup",
+    "name": "IUP-samtal",
+    "category": "Skola",
+    "subtitle": "Elevens utveckling och skolans nästa steg",
+    "notice": "Egen arbetsmall för utvecklingssamtal och IUP-underlag. Inte en fullständig IUP, ett betyg eller ett åtgärdsprogram. Lärare granskar mot ämnesunderlagen och skolans beslutade mall.",
+    "source": "https://www.skolverket.se/styrning-och-ansvar/regler-och-ansvar/ansvar-i-skolfragor/utvecklingssamtal-och-skriftlig-individuell-utvecklingsplan-iup",
+    "context_hint": "Ange vid behov årskurs, ämnen och lärarens omdömen. Komplettera överenskommelser: vad gör skolan, vem ansvarar och när följs det upp?",
+    "rules": [
+      "Skilj elevens röst, vårdnadshavarens uppgifter och lärarens omdömen. Olika bilder av skolsituationen ska bevaras, inte göras till samsyn.",
+      "Återge bara uttryckliga läraromdömen per nämnt ämne med angivet underlag. Skapa inte egna betyg, kunskapsnivåer, diagnoser eller slutsatser om måluppfyllelse.",
+      "Skilj kunskapsutveckling från trivsel och lärmiljö. Beskriv situationer och stödbehov, inte personlighet eller elevens värde.",
+      "Framåtsyftande planering ska återge uttryckliga mål, skolans insatser, ansvar och uppföljning. Hitta inte på mätetal, datum eller åtaganden för att fylla mallen.",
+      "Skolans stödansvar får inte omvandlas till ett krav på vårdnadshavares undervisning hemma. Elevens och hemmets eventuella åtaganden återges bara om de faktiskt avtalats.",
+      "Skilj på pågående stöd, förslag och överenskomna insatser. Klassificera inte på eget initiativ en insats som särskilt stöd och skapa aldrig ett åtgärdsprogram.",
+      "Ett enskilt samtal behöver inte innehålla alla ämnen eller omdömen. Lämna saknade uppgifter tomma; påstå inte att denna anteckning är en fullständig IUP."
+    ],
+    "sections": [
+      {
+        "id": "kontakt",
+        "title": "Samtal och sammanhang",
+        "guidance": "Elev, klass eller årskurs, datum, deltagare och syfte när de anges. Gissa inte ålder eller läsår."
+      },
+      {
+        "id": "elev",
+        "title": "Elevens egen bild",
+        "guidance": "Elevens intressen, styrkor, upplevelser, delaktighet och önskemål med elevens perspektiv bevarat."
+      },
+      {
+        "id": "kunskaper",
+        "title": "Kunskapsutveckling per ämne",
+        "guidance": "För varje nämnt ämne: lärarens uttryckliga omdöme, konkreta exempel och utvecklingsbehov. Inga egna betyg eller kompletterade ämnesbedömningar."
+      },
+      {
+        "id": "larmiljo",
+        "title": "Trivsel och lärmiljö",
+        "guidance": "Uppgifter om trygghet, relationer och undervisningens förutsättningar. Ange vem som beskriver vad; ingen personlighetsbedömning."
+      },
+      {
+        "id": "hem",
+        "title": "Vårdnadshavarens perspektiv",
+        "guidance": "Vårdnadshavarens uppgifter, frågor och möjligheter att bidra. Skilj dem från elevens och skolans uppfattningar."
+      },
+      {
+        "id": "mal",
+        "title": "Framåtsyftande mål",
+        "guidance": "Bara uttalade mål. Ange ämne eller område, vad eleven ska utveckla och eventuell uttrycklig uppföljningsindikator. Skilj föreslagna mål från överenskomna."
+      },
+      {
+        "id": "insatser",
+        "title": "Skolans insatser och överenskommelser",
+        "guidance": "Vad skolan gör, ansvarig och omfattning om angivet. Skilj pågående stöd, föreslagna insatser och överenskommelser. Ange elevens eller hemmets åtaganden separat och bara när de uttryckligen avtalats."
+      },
+      {
+        "id": "uppfoljning",
+        "title": "Uppföljning och kvarstående frågor",
+        "guidance": "Vad som ska följas upp, hur, av vem och när samt uttryckligt olösta frågor. Inga påhittade mötesdatum eller stödutredningar."
+      }
+    ]
+  },
+  {
+    "id": "lon",
+    "name": "Lönegrundande samtal",
+    "category": "Arbetsliv",
+    "subtitle": "Uppdrag, resultat och dokumenterade bedömningar",
+    "notice": "Egen arbetsmall, inte arbetsgivarens beslutade löneunderlag. Dokumenterar samtalet utan att poängsätta prestation, föreslå lön eller fatta lönebeslut. Anpassa till lokala kriterier och rutiner.",
+    "source": "https://skr.se/fortroendevald/lonepolitik.7759.html",
+    "context_hint": "Ange arbetsgivarens faktiska lönekriterier, bedömningsperiod och roll. Skilj medarbetarens uppgifter från chefens bedömning och löneönskemål från beslut.",
+    "rules": [
+      "Detta är dokumentation av ett lönegrundande samtal, inte automatisk lönesättning, rangordning eller prestationsbedömning.",
+      "Använd bara arbetsgivarens lönekriterier och bedömningsperiod som anges i underlaget eller kontexten. Hitta inte på en generell bedömningsmatris.",
+      "Medarbetarens resultatbeskrivning och chefens bedömning ska tydligt attribueras. Återge konkreta exempel och uttalade kopplingar till kriterier utan att själv gradera eller dra nya slutsatser.",
+      "Behåll skilda uppfattningar. Gör inte chefens påstående till ett fastställt faktum eller medarbetarens invändning till en gemensam överenskommelse.",
+      "Bevara angivna arbetsförutsättningar och förändringar i uppdraget som relevant sammanhang. Dra inga egna negativa prestationsslutsatser av hälsa, föräldraledighet, deltid eller privatliv.",
+      "Skilj lönens nuläge, medarbetarens önskemål, arbetsgivarens förslag och uttryckligt fattat beslut. Bevara belopp, valuta, period och gällandedatum när de anges. Räkna inte fram egna påslag.",
+      "Ett samtal om prestation innebär inte att ny lön beslutats. Saknad löneuppgift betyder inte att lönen är oförändrad eller att löneökning nekats.",
+      "Återge utvecklingsmål, arbetsgivarens stöd och ansvar bara när de nämnts. Uppföljning av en oenighet är inte samma sak som att oenigheten lösts."
+    ],
+    "sections": [
+      {
+        "id": "kontakt",
+        "title": "Samtal, roll och period",
+        "guidance": "Medarbetare, chef, datum, befattning, verksamhet och bedömningsperiod om angivna. Bevara förändringar i roll eller ansvar."
+      },
+      {
+        "id": "kriterier",
+        "title": "Uppdrag, mål och lönekriterier",
+        "guidance": "De faktiska uppdrag, mål och lokala lönekriterier som uttryckligen nämns. Inga egna kriterier eller generiska poängskalor."
+      },
+      {
+        "id": "resultat",
+        "title": "Medarbetarens resultat och exempel",
+        "guidance": "Medarbetarens egen beskrivning av resultat, ansvar, bidrag och konkreta exempel. Bevara siffror, tidsperioder och uttalad osäkerhet."
+      },
+      {
+        "id": "chef",
+        "title": "Chefens bedömning och motivering",
+        "guidance": "Chefens uttryckliga bedömningar, motiveringar och exempel i relation till nämnda kriterier. Återge som chefens bedömning, inte som modellens slutsats."
+      },
+      {
+        "id": "forutsattningar",
+        "title": "Arbetsförutsättningar och stöd",
+        "guidance": "Angivna resurser, prioriteringar, förändringar i uppdrag och organisatoriska hinder. Inga egna orsakssamband eller slutsatser om arbetsförmåga."
+      },
+      {
+        "id": "utveckling",
+        "title": "Utvecklingsmål och överenskommelser",
+        "guidance": "Uttalade utvecklingsmål, aktiviteter, stöd från arbetsgivaren och ansvar. Skilj önskemål och förslag från överenskomna åtaganden."
+      },
+      {
+        "id": "skilda",
+        "title": "Skilda uppfattningar och öppna frågor",
+        "guidance": "Kvarstående oenighet och respektive parts uppfattning kort och sakligt. Bevara olösta frågor; påstå inte samsyn utan stöd."
+      },
+      {
+        "id": "lon",
+        "title": "Löneuppgifter och beslutsstatus",
+        "guidance": "Endast nämnda belopp, enheter och datum. Märk tydligt nuvarande lön, önskemål, förslag respektive beslut. Skriv att inget beslut fattades vid samtalet endast om det sägs."
+      },
+      {
+        "id": "uppfoljning",
+        "title": "Nästa steg och uppföljning",
+        "guidance": "Överenskomna steg, vem som gör vad, vilket underlag som ska tas fram och tidpunkt om angiven. Ingen automatisk eskalering eller lönegaranti."
+      }
+    ]
+  }
 ]

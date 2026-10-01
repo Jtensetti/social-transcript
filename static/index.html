@@ -51,7 +51,8 @@
         <div class="document-meta"><div><span id="draft-name" class="document-title">Arbetsmall</span><span class="draft-tag">Ej granskad</span></div><p id="template-notice" class="helper"></p></div>
         <div id="draft-content" class="draft-content"><div class="empty-state"><span class="empty-number">Aa</span><h3>Din anteckning hamnar här.</h3><p>Välj en mall och transkribera ett samtal.<br>Du kan också börja med en inklistrad text.</p></div></div>
         <aside id="review" class="review" hidden><h3>Att kontrollera</h3><ul id="review-list"></ul></aside>
-        <div class="draft-footer"><p id="draft-status" class="helper">Granska alltid texten mot underlaget.</p><div class="footer-buttons"><button id="copy" class="secondary" type="button" disabled>Kopiera text</button><button id="lifecare" class="primary" type="button" disabled aria-describedby="lifecare-note">Överför till Lifecare</button></div><span id="lifecare-note" class="microcopy">Lifecare är inte anslutet. Knappen gör ingenting.</span></div>
+        <aside id="source-audit" class="review source-audit" hidden aria-live="polite"><h3>AI-kontroll mot underlaget</h3><p id="audit-status" class="helper"></p><ul id="audit-list"></ul></aside>
+        <div class="draft-footer"><p id="draft-status" class="helper">Granska alltid texten mot underlaget.</p><div class="footer-buttons"><button id="audit-button" class="secondary" type="button" disabled>Kontrollera mot underlaget</button><button id="copy" class="secondary" type="button" disabled>Kopiera text</button><button id="lifecare" class="primary" type="button" disabled aria-describedby="lifecare-note">Överför till Lifecare</button></div><span id="lifecare-note" class="microcopy">Lifecare är inte anslutet. Knappen gör ingenting.</span></div>
       </section>
     </div>
     <footer class="page-footer"><span>Ljud och text bearbetas på den här datorn med lokala modeller.</span><span>Pianissimo av Klang AI · Ollama</span></footer>
