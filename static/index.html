@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Social Transcript</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/style.css">
+  <script type="module" src="/static/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">st</span><div>Social Transcript<small>Från samtal till anteckning</small></div></div>
+    <div class="top-actions"><span class="local-label"><span class="dot"></span>Lokal prototyp</span><button id="reset" class="quiet">Nytt samtal</button></div>
+  </header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">DOKUMENTATIONSSTÖD</p><h1>Lyssna först. Dokumentera sedan.</h1></div><p class="privacy-note">Använd påhittade uppgifter under test.<br>Inget sparas automatiskt av appen.</p></div>
+    <div id="notification" class="notification" role="status" aria-live="polite" hidden></div>
+    <div class="workspace">
+      <section class="panel source-panel" aria-labelledby="source-heading">
+        <div class="panel-heading"><div class="step">01</div><h2 id="source-heading">Underlag</h2></div>
+        <label for="template">Arbetsmall</label>
+        <select id="template" disabled><option>Laddar mallar…</option></select>
+        <p id="template-subtitle" class="helper"></p>
+        <div class="label-row"><label for="microphone">Mikrofon</label><button id="find-mics" class="text-button" type="button">Hitta mikrofoner</button></div>
+        <select id="microphone"><option value="">Systemets standardmikrofon</option></select>
+        <div class="recorder">
+          <div class="recorder-top"><button id="record" class="record-button" type="button"><span class="record-dot" aria-hidden="true"></span><span id="record-label">Start</span></button><span id="timer" class="timer" aria-label="Inspelningstid">00:00</span></div>
+          <progress id="level" class="level" max="1" value="0" aria-label="Mikrofonnivå"></progress>
+          <div class="recorder-info"><span id="record-status">Redo att spela in</span><span>Max 15 min</span></div>
+          <audio id="playback" controls hidden aria-label="Lyssna på inspelningen"></audio>
+        </div>
+        <button id="transcribe" class="primary wide" type="button" disabled>Transkribera</button>
+        <p class="helper">Pianissimo transkriberar. Ollama fyller sedan arbetsmallen.</p>
+        <div class="divider"></div>
+        <div class="label-row"><label for="transcript">Transkribering</label><span id="word-count" class="microcopy">0 ord</span></div>
+        <textarea id="transcript" rows="8" spellcheck="false" autocomplete="off" placeholder="Spela in eller klistra in en text. Du kan rätta transkriberingen här."></textarea>
+        <label for="context">Kontext och justeringar</label>
+        <textarea id="context" rows="4" spellcheck="false" autocomplete="off" placeholder="Komplettera med sammanhang, rätta en uppgift eller be om en annan formulering."></textarea>
+        <button id="generate" class="secondary wide" type="button" disabled>Skapa utkast</button>
+        <details class="settings" open>
+          <summary>Lokal modell</summary>
+          <label for="model" class="sr-only">Ollama-modell</label>
+          <div class="model-row"><select id="model" disabled><option>Kontrollerar Ollama…</option></select><button id="refresh-models" class="quiet" type="button" title="Uppdatera modellistan">Uppdatera</button></div>
+          <div class="service-status"><span id="ollama-status">Ollama kontrolleras</span><span id="asr-status">Pianissimo kontrolleras</span></div>
+        </details>
+      </section>
+      <section class="panel draft-panel" aria-labelledby="draft-heading">
+        <div class="panel-heading draft-header"><div class="step">02</div><h2 id="draft-heading">Utkast</h2><div class="version-picker"><label for="versions" class="sr-only">Tidigare versioner</label><select id="versions" disabled><option>Ingen version ännu</option></select></div></div>
+        <div class="document-meta"><div><span id="draft-name" class="document-title">Arbetsmall</span><span class="draft-tag">Ej granskad</span></div><p id="template-notice" class="helper"></p></div>
+        <div id="draft-content" class="draft-content"><div class="empty-state"><span class="empty-number">Aa</span><h3>Din anteckning hamnar här.</h3><p>Välj en mall och transkribera ett samtal.<br>Du kan också börja med en inklistrad text.</p></div></div>
+        <aside id="review" class="review" hidden><h3>Att kontrollera</h3><ul id="review-list"></ul></aside>
+        <div class="draft-footer"><p id="draft-status" class="helper">Granska alltid texten mot underlaget.</p><div class="footer-buttons"><button id="copy" class="secondary" type="button" disabled>Kopiera text</button><button id="lifecare" class="primary" type="button" disabled aria-describedby="lifecare-note">Överför till Lifecare</button></div><span id="lifecare-note" class="microcopy">Lifecare är inte anslutet. Knappen gör ingenting.</span></div>
+      </section>
+    </div>
+    <footer class="page-footer"><span>Ljud och text bearbetas på den här datorn med lokala modeller.</span><span>Pianissimo av Klang AI · Ollama</span></footer>
+  </main>
+  <noscript>Aktivera JavaScript för mikrofoninspelning och lokal bearbetning.</noscript>
+</body>
+</html>

@@ -1,0 +1,46 @@
+[
+  {"id":"bbic","name":"BBIC","subtitle":"Barnets situation och behov","notice":"Förenklad arbetsmall. Inte ett officiellt BBIC-formulär eller en fullständig BBIC-utredning.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/barn-och-unga/barn-och-unga-i-socialtjansten/barns-behov-i-centrum/","sections":[
+    {"id":"kontakt","title":"Kontakt och sammanhang","guidance":"Kontaktorsak, deltagare och datum bara om de anges."},
+    {"id":"barnet","title":"Barnets egen berättelse","guidance":"Barnets uttryckliga uppfattning; skilj från vuxnas tolkningar."},
+    {"id":"utveckling","title":"Barnets utveckling","guidance":"Angivna uppgifter om hälsa, utbildning, känslor, beteende och relationer. Ingen egen analys."},
+    {"id":"foraldrar","title":"Föräldrarnas förmåga","guidance":"Uppgivna omsorgsförhållanden, stöd och trygghet. Ange uppgiftslämnare."},
+    {"id":"miljo","title":"Familj och miljö","guidance":"Uppgifter om familj, boende, nätverk och levnadsförhållanden."},
+    {"id":"fortsatt","title":"Överenskommelser och fortsatt arbete","guidance":"Bara uttryckligen nämnda åtgärder, ansvar och uppföljning; inga automatiska beslut."}
+  ]},
+  {"id":"ibic","name":"IBIC","subtitle":"Resurser, behov och mål i vardagen","notice":"Förenklad arbetsmall. Inte en fullständig IBIC-dokumentation; ingen automatisk ICF-kodning eller behovsbedömning.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/individens-behov-i-centrum-ibic/","sections":[
+    {"id":"kontakt","title":"Kontakt och sammanhang","guidance":"Kontaktorsak och deltagare när det framgår."},
+    {"id":"perspektiv","title":"Individens perspektiv","guidance":"Det personen själv uppger är viktigt och vill ha stöd med."},
+    {"id":"nulage","title":"Nuläge och berörda livsområden","guidance":"Uppgifter om funktion och vardag. Nämn bara livsområden som berörs, utan koder eller skattningar."},
+    {"id":"resurser","title":"Resurser och omgivning","guidance":"Angivna förmågor, hjälpmedel, nätverk och omgivningsfaktorer."},
+    {"id":"mal","title":"Uttryckta behov och mål","guidance":"Personens eller handläggarens uttryckligen angivna behov och mål med tydlig källa."},
+    {"id":"insatser","title":"Insatser och uppföljning","guidance":"Skilj beslutade, genomförda och föreslagna insatser. Ange bara uttryckligt ansvar och tid."}
+  ]},
+  {"id":"asi","name":"ASI","subtitle":"Samtalsanteckning utifrån livsområden","notice":"Arbetsmall inspirerad av ASI:s livsområden. Ersätter inte ASI-intervju eller originalformulär. Inga automatiska skattningar eller kompositpoäng.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/asi-addiction-severity-index/","sections":[
+    {"id":"bakgrund","title":"Bakgrund och kontakt","guidance":"Uttrycklig bakgrund och syfte med kontakten."},
+    {"id":"fysisk","title":"Fysisk hälsa","guidance":"Uppgifter om fysisk hälsa. Skilj senaste 30 dagarna från tidigare liv, om angivet."},
+    {"id":"arbete","title":"Arbete och försörjning","guidance":"Angivna uppgifter om sysselsättning, utbildning och försörjning."},
+    {"id":"alkohol","title":"Alkoholanvändning","guidance":"Återge mängder, frekvens och tidsperiod exakt som uppgivna; beräkna inga poäng."},
+    {"id":"narkotika","title":"Narkotikaanvändning","guidance":"Återge uppgivna preparat och tidsperioder utan antaganden."},
+    {"id":"rattsligt","title":"Rättsliga problem","guidance":"Endast uttryckliga uppgifter, med källa och tid om kända."},
+    {"id":"familj","title":"Familj och umgänge","guidance":"Uppgivna relationer och social situation."},
+    {"id":"psykisk","title":"Psykisk hälsa","guidance":"Uppgivna erfarenheter och symtom utan egna diagnoser eller riskslutsatser."},
+    {"id":"fortsatt","title":"Uttryckta hjälpbehov och fortsatt kontakt","guidance":"Endast nämnda önskemål, överenskommelser och uppföljning; inga egna behandlingsförslag."}
+  ]},
+  {"id":"freda","name":"FREDA","subtitle":"Dokumentation om våld, skydd och stöd","notice":"Arbetsmall för samtalsanteckningar. Ersätter inte FREDA-kortfrågor, FREDA-beskrivning eller FREDA-farlighetsbedömning. Ingen automatisk risknivå eller poängsättning.","source":"https://www.socialstyrelsen.se/kunskapsstod-och-regler/omraden/evidensbaserad-praktik/metodguiden/freda/","sections":[
+    {"id":"kontakt","title":"Kontakt och sammanhang","guidance":"Kontaktorsak och vilka som deltog om angivet."},
+    {"id":"berattelse","title":"Personens berättelse","guidance":"Återge personens uppgifter om utsatthet med tydlig attribution, inte som fastslagna fakta."},
+    {"id":"vald","title":"Beskrivet våld och tidsförlopp","guidance":"Bara uppgivna handlingar, omfattning och tid. Tystnad är inte frånvaro av våld."},
+    {"id":"trygghet","title":"Uppgifter om aktuell trygghet","guidance":"Återge uttalad oro, hot och skyddsförhållanden. Beräkna aldrig farlighet eller risknivå."},
+    {"id":"barn","title":"Uppgifter om barn","guidance":"Endast uttryckligt nämnda uppgifter om barn och deras situation."},
+    {"id":"stod","title":"Önskat stöd och vidtagna åtgärder","guidance":"Skilj önskat stöd, planerade insatser och faktiskt genomförda åtgärder."},
+    {"id":"uppfoljning","title":"Överenskommen uppföljning","guidance":"Bara uttryckliga överenskommelser om ansvar och kontakt; ingen egen säkerhetsplan."}
+  ]},
+  {"id":"esther","name":"ESTHER","subtitle":"Det som är viktigt för personen","notice":"Egen arbetsmall inspirerad av ESTHER:s personcentrerade arbetssätt. Avser inte ESTER-bedömning för barn och unga.","source":"https://www.rjl.se/qulturum/natverka/esther/","sections":[
+    {"id":"viktigt","title":"Det som är viktigt för personen","guidance":"Utgå från personens egna mål, önskemål och prioriteringar."},
+    {"id":"nulage","title":"Situation och vardag","guidance":"Hur personen beskriver sin situation, utan att tillskriva personen andras tolkningar."},
+    {"id":"fungerar","title":"Det som fungerar och egna resurser","guidance":"Angivna styrkor, fungerande stöd och resurser."},
+    {"id":"behov","title":"Önskat stöd och förändring","guidance":"Uttryckliga behov och önskemål. Inga egna rekommendationer."},
+    {"id":"samordning","title":"Samordning och ansvar","guidance":"Aktörer och ansvar som faktiskt nämns. Skilj förslag från överenskommelse."},
+    {"id":"nasta","title":"Nästa steg och uppföljning","guidance":"Bara det som uttryckligen har planerats eller överenskommits."}
+  ]}
+]
